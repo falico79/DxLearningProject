@@ -6,23 +6,38 @@ int WINAPI WinMain(
     PSTR lpCmdLine,
     int nCmdShow )
 {
-    Window wnd(800, 300, L"Test Program");
+    try {
+        Window wnd(800, 300, L"Test Program");
 
-    // message pump
-    MSG msg;
-    BOOL gResult;
-    while ( (gResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
-    {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
-    }
+        // message pump
+        MSG msg;
+        BOOL gResult;
+        while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
 
-    if (gResult == -1)
-    {
-        return -1;
+        if (gResult == -1)
+        {
+            return -1;
+        }
+        else
+        {
+            return msg.wParam;
+        }
     }
-    else
+    catch (const dxException& e)
     {
-        return msg.wParam;
+        MessageBoxA(nullptr, e.what(), e.GetType(), MB_OK | MB_ICONEXCLAMATION);
     }
+    catch (const std::exception& e)
+    {
+        MessageBoxA(nullptr, e.what(), "Standart Excption", MB_OK | MB_ICONEXCLAMATION);
+    }
+    catch (...)
+    {
+        MessageBoxA(nullptr, "No details available", "Unknown Exception", MB_OK | MB_ICONEXCLAMATION);
+    }
+    return -1;
 }

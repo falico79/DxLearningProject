@@ -1,7 +1,22 @@
 #pragma once
 #include "windows_helper.h"
+#include "dxException.h"
+
 class Window
 {
+public:
+	class Exception : public dxException
+	{
+	public:
+		Exception(int line, const char* file, HRESULT hr) noexcept;
+		const char* what() const noexcept override;
+		virtual const char* GetType() const noexcept override;
+		static std::string TranslateErrorCode(HRESULT hr) noexcept;
+		HRESULT GetErrorCode() const noexcept;
+		std::string GetErrorString() const noexcept;
+	private:
+		HRESULT hr;
+	};
 private:
 	class WindowClass
 	{
@@ -18,7 +33,7 @@ private:
 		HINSTANCE hInst;
 	};
 public:
-	Window(int width, int height, const wchar_t* name) noexcept;
+	Window(int width, int height, const wchar_t* name);
 	~Window();
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
@@ -32,3 +47,5 @@ private:
 	HWND hWnd;
 };
 
+#define CHWND_EXCEPT(hr) Window::Exception(__LINE__,__FILE__,hr)
+#define CHWND_LAST_EXCEPT() Window::Exception(__LINE__,__FILE__,GetLastError());
