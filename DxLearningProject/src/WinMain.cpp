@@ -1,4 +1,4 @@
-#include "Window.h"
+#include "App.h"
 
 int WINAPI WinMain(
     HINSTANCE hInstance,
@@ -7,25 +7,8 @@ int WINAPI WinMain(
     int nCmdShow )
 {
     try {
-        Window wnd(800, 300, L"Test Program");
+        return App{}.Go();
 
-        // message pump
-        MSG msg;
-        BOOL gResult;
-        while ((gResult = GetMessage(&msg, nullptr, 0, 0)) > 0)
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-
-        if (gResult == -1)
-        {
-            return -1;
-        }
-        else
-        {
-            return msg.wParam;
-        }
     }
     catch (const dxException& e)
     {

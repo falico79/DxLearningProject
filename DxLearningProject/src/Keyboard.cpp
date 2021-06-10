@@ -102,6 +102,6 @@ void Keyboard::TrimBuffer(std::queue<T>& buffer) noexcept
 {
     while (buffer.size() > bufferSize)
     {
-        buffer.pop()
+        buffer.pop();
     }
 }
