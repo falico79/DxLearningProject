@@ -92,6 +92,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\DxgiInfoManager.cpp" />
+    <ClCompile Include="src\dxerr.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
     <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\Mouse.cpp" />
@@ -102,6 +104,8 @@
     <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\DxgiInfoManager.h" />
+    <ClInclude Include="src\dxerr.h" />
     <ClInclude Include="src\Graphics.h" />
     <ClInclude Include="src\App.h" />
     <ClInclude Include="src\Mouse.h" />
@@ -110,6 +114,11 @@
     <ClInclude Include="src\windows_helper.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\Timer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\DXGetErrorDescription.inl" />
+    <None Include="src\DXGetErrorString.inl" />
+    <None Include="src\DXTrace.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
