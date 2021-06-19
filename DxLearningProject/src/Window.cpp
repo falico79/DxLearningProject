@@ -1,6 +1,8 @@
 ﻿#include "Window.h"
 #include <sstream>
 
+#include "WindowsThrowMacros.h"
+
 Window::WindowClass Window::WindowClass::wndClass;
 
 const wchar_t* Window::WindowClass::GetName() noexcept

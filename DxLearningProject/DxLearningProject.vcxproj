@@ -57,7 +57,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;IS_DEBUG=true;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -76,7 +76,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;IS_DEBUG=false;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -92,6 +92,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Pyramid.cpp" />
+    <ClCompile Include="src\Melon.cpp" />
+    <ClCompile Include="src\Box.cpp" />
+    <ClCompile Include="src\Drawable.cpp" />
+    <ClCompile Include="src\PixelShader.cpp" />
+    <ClCompile Include="src\InputLayout.cpp" />
+    <ClCompile Include="src\IndexBuffer.cpp" />
+    <ClCompile Include="src\Bindable.cpp" />
     <ClCompile Include="src\DxgiInfoManager.cpp" />
     <ClCompile Include="src\dxerr.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
@@ -102,18 +110,46 @@
     <ClCompile Include="src\WinMain.cpp" />
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\Topology.cpp" />
+    <ClCompile Include="src\VertexBuffer.cpp" />
+    <ClCompile Include="src\VertexShader.cpp" />
+    <ClCompile Include="src\TransformCbuf.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Pyramid.h" />
+    <ClInclude Include="src\Melon.h" />
+    <ClInclude Include="src\Cone.h" />
+    <ClInclude Include="src\Cube.h" />
+    <ClInclude Include="src\DrawableBase.h" />
+    <ClInclude Include="src\BindableBase.h" />
+    <ClInclude Include="src\Box.h" />
+    <ClInclude Include="src\ConstantBuffer.h" />
+    <ClInclude Include="src\Drawable.h" />
+    <ClInclude Include="src\dxMath.h" />
+    <ClInclude Include="src\IndexedTriangleList.h" />
+    <ClInclude Include="src\PixelShader.h" />
+    <ClInclude Include="src\InputLayout.h" />
+    <ClInclude Include="src\IndexBuffer.h" />
+    <ClInclude Include="src\Bindable.h" />
     <ClInclude Include="src\DxgiInfoManager.h" />
     <ClInclude Include="src\dxerr.h" />
     <ClInclude Include="src\Graphics.h" />
     <ClInclude Include="src\App.h" />
+    <ClInclude Include="src\GraphicsThrowMacros.h" />
     <ClInclude Include="src\Mouse.h" />
     <ClInclude Include="src\Keyboard.h" />
     <ClInclude Include="src\dxException.h" />
+    <ClInclude Include="src\Plane.h" />
+    <ClInclude Include="src\Prism.h" />
+    <ClInclude Include="src\Sphere.h" />
+    <ClInclude Include="src\WindowsThrowMacros.h" />
     <ClInclude Include="src\windows_helper.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\Timer.h" />
+    <ClInclude Include="src\Topology.h" />
+    <ClInclude Include="src\VertexBuffer.h" />
+    <ClInclude Include="src\VertexShader.h" />
+    <ClInclude Include="src\TransformCbuf.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\DXGetErrorDescription.inl" />
@@ -121,16 +157,30 @@
     <None Include="src\DXTrace.inl" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="src\Shader\PixelShader.hlsl">
+    <FxCompile Include="src\Shader\ColorBlendPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\Shader\ColorBlendVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\Shader\ColorIndexPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="src\Shader\VertexShader.hlsl">
+    <FxCompile Include="src\Shader\ColorIndexVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
